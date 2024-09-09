@@ -82,6 +82,20 @@ rm -rf tiles
 exit
 ```
 
+### Customizing Your Docker Container Run
+
+The following environment variables can be used to customize your container run:
+
+| Environment Variable | Description |
+| -------------------- | ----------- |
+| `PGUSER`, `PGHOST`   | Postgres connection variables for user and host. |
+| `PBFFile`            | Path to your own PBF file. This is a relative path from `/data` inside the container. For example, `mycounty/myfile.pbf` will resolve to `/data/mycounty/myfile.pbf` inside the container. |
+| `STYLESHEET`         | Defines the map style. Defaults to `openstreetmap-carto`. Available options: `mapnik-style`, `openstreetmap-carto`, `openstreets-nl`, `osm-blossom`, and `osm-bright`. The container expects the following files to exist based on the chosen stylesheet: |
+|                      | - `/root/src/style/${STYLESHEET}/index-${STYLESHEET}.html`: A basic Leaflet viewer for the resulting tiles. |
+|                      | - `/root/src/style/${STYLESHEET}/generate_tiles.py`: Python script to generate tiles using the chosen style. |
+|                      | - `/root/src/style/${STYLESHEET}/${STYLESHEET}.xml`: Mapnik XML file for rendering. |
+
+
 ## How to use/view your generated osm tiles
 
 Once that you have your tiles exported in a folder directory structure, you can use/view the generated raster tiles using various JavaScript mapping libraries. For example:
